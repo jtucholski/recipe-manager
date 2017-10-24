@@ -1,0 +1,84 @@
+﻿@* 5. Create the empty view to see if the page loads AND TEST IT *@
+@* 7. Add the using statement and model *@
+@using RecipeManager.Web.Models;
+@model List<Recipe>
+@{
+    ViewBag.Title = "Newest Recipes";
+    
+}
+
+<h2>Latest Recipes</h2>
+
+@* 8. Display the recipes on the page, if there are any *@
+@if(Model.Count == 0)
+{
+    <p>No recipes have been added yet</p>
+}
+else
+{
+    @*20. Make it look nice *@
+    <div class="container-fluid">
+        <div class="recipes row">
+            <div id="columns" data-columns="">
+                @foreach (Recipe r in Model)
+                {
+                    <div class="panel panel-default" style="min-height: 300px;">
+                        <div class="panel-heading">
+                            <h3>@r.Name</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p style="margin-top: 10px;">@r.Description</p>
+                            <a href="@Url.Action("Detail", "Recipes", new { id = r.Id })">
+                                @if (!String.IsNullOrEmpty(r.ImageName))
+                                {
+                                    <img class="img-responsive" src="@Url.Content("~/images/" + r.ImageName)" alt="@r.Name" />
+                                }
+                                else
+                                {
+                                    <img class="img-responsive" src="@Url.Content("~/images/tofurkey.jpg")" alt="@r.Name" />
+                                }
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    @*
+    <div class="recipes">
+        @foreach(var recipe in Model)
+        {
+            <div class="recipe">
+                <h3>@recipe.Name</h3>
+                <p>@recipe.Description</p>
+                <img src="@Url.Content("~/images/" + recipe.ImageName)" alt="@recipe.Name" />
+
+                 19. Add a default image  
+                @if (String.IsNullOrEmpty(recipe.ImageName))
+                {
+                    <img src="@Url.Content("~/images/tofurkey.jpg")" alt="@recipe.Name" />
+                }
+                else
+                {
+                    <img src="@Url.Content("~/images/" + recipe.ImageName)" alt="@recipe.Name" />
+                }
+
+            </div>
+        }
+    </div>
+        *@
+
+
+}
+
+@* Generates an <a> element
+    Link Text, Action Name, Controller Name *@
+@Html.ActionLink("Add New Recipe", "New", "Recipes")
+
+@if(Session["CurrentRecipe"] != null)
+{
+    @* Link Text, Action Name, Controller Name, Querystring Parameters, Html Attributes *@
+    @Html.ActionLink("Draft Recipe", "New", "Recipes", new { draftMode = true }, null)
+}

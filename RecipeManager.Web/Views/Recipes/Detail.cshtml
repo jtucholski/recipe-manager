@@ -1,0 +1,25 @@
+﻿@using RecipeManager.Web.Models;
+@model Recipe
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+
+<div id="detail">
+    <h3>@Model.Name</h3>
+    @if (!String.IsNullOrEmpty(Model.ImageName))
+    {
+        <img class="img-responsive" src="@Url.Content("~/images/" + Model.ImageName)" alt="@Model.Name" />
+    }
+    else
+    {
+        <img class="img-responsive" src="@Url.Content("~/images/tofurkey.jpg")" alt="@Model.Name" />
+    }
+    <p class="text-muted">@Model.Description</p>
+    <h4>Cook Time: @Model.CookingTime</h4>
+    <h4>Prep Time: @Model.PrepTime</h4>
+    
+    <p>Prep Instructions: @Model.Details</p>
+</div>
+
